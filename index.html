@@ -7,43 +7,60 @@
 
   <style>
     :root{
-      --glass: rgba(255,255,255,.88);
-      --shadow: 0 18px 48px rgba(0,0,0,.18);
-      --r: 22px;
-
+      /* theme */
       --ink:#121218;
       --muted:#5b5b66;
 
+      /* background gradient */
       --g1:#ff3d7f;
       --g2:#ffcc00;
       --g3:#4f7cff;
       --g4:#00d084;
+
+      /* glass */
+      --glassA: rgba(255,255,255,.82);
+      --glassB: rgba(255,255,255,.58);
+      --panelA: rgba(255,255,255,.74);
+      --panelB: rgba(255,255,255,.52);
+
+      --shadow: 0 18px 48px rgba(0,0,0,.18);
+      --shadowSoft: 0 10px 22px rgba(0,0,0,.10);
+      --r: 22px;
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
 
+    /* --- FULLSCREEN STAGE (fixed, no page scroll) --- */
     body{
       margin:0;
       font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
       color:var(--ink);
-      background: linear-gradient(120deg,var(--g1),var(--g2),var(--g3),var(--g4));
+
+      /* better background (more delightful + less harsh) */
+      background:
+        radial-gradient(1200px 900px at 15% 18%, rgba(255,255,255,.18), transparent 55%),
+        radial-gradient(1100px 900px at 85% 18%, rgba(255,255,255,.14), transparent 55%),
+        radial-gradient(1100px 900px at 50% 95%, rgba(0,0,0,.10), transparent 60%),
+        linear-gradient(120deg,var(--g1),var(--g2),var(--g3),var(--g4));
       background-size: 260% 260%;
       animation: bg 12s ease infinite;
 
+      /* fixed viewport layout */
+      overflow:hidden; /* no page scroll */
       display:grid;
       place-items:center;
 
-      overflow:hidden; /* no scroll */
       padding:
-        calc(12px + env(safe-area-inset-top))
-        calc(12px + env(safe-area-inset-right))
-        calc(12px + env(safe-area-inset-bottom))
-        calc(12px + env(safe-area-inset-left));
+        calc(10px + env(safe-area-inset-top))
+        calc(10px + env(safe-area-inset-right))
+        calc(10px + env(safe-area-inset-bottom))
+        calc(10px + env(safe-area-inset-left));
 
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
       touch-action: manipulation;
+      overscroll-behavior: none;
     }
 
     @keyframes bg{
@@ -57,8 +74,8 @@
     .e{
       position:absolute;
       border-radius:999px;
-      background: rgba(255,255,255,.30);
-      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.26);
+      border:1px solid rgba(255,255,255,.16);
       display:grid;place-items:center;
       filter: drop-shadow(0 10px 16px rgba(0,0,0,.10));
       animation: rise linear infinite;
@@ -69,21 +86,25 @@
       to{transform:translateY(-22svh) rotate(180deg)}
     }
 
+    /* --- APP SHELL --- */
     .app{
       width:min(1040px, 100%);
-      height: min(700px, 96dvh);
-      height: min(700px, 96svh);
+      /* IMPORTANT: cap to viewport so it never overlaps */
+      height: min(760px, calc(100dvh - (20px + env(safe-area-inset-top) + env(safe-area-inset-bottom))));
+      height: min(760px, calc(100svh - (20px + env(safe-area-inset-top) + env(safe-area-inset-bottom))));
 
       border-radius: var(--r);
-      background: var(--glass);
-      border:1px solid rgba(255,255,255,.55);
+      background: linear-gradient(135deg, var(--glassA), var(--glassB));
+      border:1px solid rgba(255,255,255,.45);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+
       overflow:hidden;
       position:relative;
+
       display:grid;
-      grid-template-rows: auto 1fr;
+      grid-template-rows: auto minmax(0, 1fr); /* key: prevent overflow */
     }
 
     header{
@@ -93,7 +114,7 @@
       justify-content:space-between;
       gap:10px;
       border-bottom: 1px solid rgba(0,0,0,.06);
-      background: linear-gradient(135deg, rgba(255,255,255,.82), rgba(255,255,255,.48));
+      background: linear-gradient(135deg, rgba(255,255,255,.78), rgba(255,255,255,.44));
     }
 
     .brand{display:flex; align-items:center; gap:10px; min-width:0}
@@ -140,12 +161,14 @@
       padding:8px 10px;
       border-radius:999px;
       font-size:12px;
-      background: rgba(255,255,255,.62);
+      background: rgba(255,255,255,.60);
       border:1px solid rgba(0,0,0,.10);
       display:inline-flex; gap:8px; align-items:center;
       user-select:none;
+      white-space:nowrap;
     }
 
+    /* --- MAIN CONTENT --- */
     .content{
       display:grid;
       grid-template-columns: 1fr 1.05fr;
@@ -156,18 +179,25 @@
 
     .panel{
       border-radius: 18px;
-      border:1px solid rgba(0,0,0,.09);
-      background: rgba(255,255,255,.66);
+      border:1px solid rgba(255,255,255,.40);
+      background: linear-gradient(135deg, var(--panelA), var(--panelB));
+      box-shadow: var(--shadowSoft);
       padding: 12px;
       min-height:0;
-      overflow:hidden;
+
+      /* IMPORTANT: allow inner scroll if needed (prevents overlap) */
+      overflow:auto;
     }
+
+    /* hide scrollbars (mobile look clean) */
+    .panel::-webkit-scrollbar{ width:0; height:0; }
+    .panel{ scrollbar-width: none; }
 
     .form{
       display:grid;
       gap:10px;
       height:100%;
-      grid-template-rows: auto auto auto auto auto 1fr;
+      grid-template-rows: auto auto auto auto auto minmax(0, 1fr);
       min-height:0;
     }
 
@@ -177,7 +207,7 @@
       padding:10px 10px;
       border-radius:14px;
       border:1px solid rgba(0,0,0,.10);
-      background: rgba(255,255,255,.95);
+      background: rgba(255,255,255,.92);
       outline:none;
       font-size:14px;
     }
@@ -186,7 +216,13 @@
       box-shadow: 0 0 0 4px rgba(79,124,255,.14);
     }
 
-    .btnRow{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+    /* buttons row (prevents overflow on small phones) */
+    .btnRow{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
     button{
       border:none;
       cursor:pointer;
@@ -211,15 +247,15 @@
       box-shadow: 0 14px 26px rgba(0,0,0,.20);
     }
     .ghost{
-      background: rgba(255,255,255,.58);
+      background: rgba(255,255,255,.56);
       border:1px solid rgba(0,0,0,.10);
       color:#121218;
     }
 
     .stats{
       border-radius: 18px;
-      border:1px solid rgba(0,0,0,.09);
-      background: rgba(255,255,255,.70);
+      border:1px solid rgba(255,255,255,.40);
+      background: linear-gradient(135deg, rgba(255,255,255,.78), rgba(255,255,255,.55));
       padding: 10px;
     }
     .statsRow{
@@ -232,7 +268,7 @@
       padding:8px 10px;
       border-radius:999px;
       font-size:12px;
-      background: rgba(255,255,255,.62);
+      background: rgba(255,255,255,.58);
       border:1px solid rgba(0,0,0,.10);
       display:inline-flex;
       gap:8px;
@@ -243,7 +279,7 @@
     .arenaWrap{
       height:100%;
       display:grid;
-      grid-template-rows: auto 1fr;
+      grid-template-rows: auto minmax(0, 1fr);
       gap:10px;
       min-height:0;
     }
@@ -256,8 +292,11 @@
     }
     .arena{
       border-radius: 18px;
-      border:1px solid rgba(0,0,0,.10);
-      background: linear-gradient(135deg, rgba(255,255,255,.82), rgba(255,255,255,.36));
+      border:1px solid rgba(255,255,255,.40);
+      background:
+        radial-gradient(800px 520px at 15% 15%, rgba(255,61,127,.18), transparent 60%),
+        radial-gradient(760px 520px at 85% 20%, rgba(79,124,255,.18), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.80), rgba(255,255,255,.34));
       box-shadow: 0 12px 26px rgba(0,0,0,.08) inset;
       position:relative;
       overflow:hidden;
@@ -293,6 +332,7 @@
       transform: translateY(14px);
       opacity:0;
       transition: .28s ease;
+      z-index: 5;
     }
     .toast.show{display:block; opacity:1; transform: translateY(0)}
     .toast h3{margin:0 0 4px; font-size:14px}
@@ -310,9 +350,9 @@
     /* Sound gate */
     .soundGate{
       position: fixed;
-      left: calc(12px + env(safe-area-inset-left));
-      right: calc(12px + env(safe-area-inset-right));
-      bottom: calc(12px + env(safe-area-inset-bottom));
+      left: calc(10px + env(safe-area-inset-left));
+      right: calc(10px + env(safe-area-inset-right));
+      bottom: calc(10px + env(safe-area-inset-bottom));
       max-width: 1040px;
       margin: 0 auto;
       border-radius: 18px;
@@ -342,23 +382,35 @@
 
     audio{display:none}
 
-    /* Tablet / phone: keep everything visible (no scroll) */
+    /* ---------- MOBILE / TABLET FIX (NO OVERLAP) ---------- */
     @media (max-width: 900px){
       .app{
-        height: 97dvh;
-        height: 97svh;
         border-radius: 18px;
+        height: calc(100dvh - (20px + env(safe-area-inset-top) + env(safe-area-inset-bottom)));
+        height: calc(100svh - (20px + env(safe-area-inset-top) + env(safe-area-inset-bottom)));
       }
+
       header{padding:10px 12px}
       .sub{display:none}
       .logo{width:42px;height:42px}
+
+      /* stack panels */
       .content{
         padding: 10px;
         gap: 10px;
         grid-template-columns: 1fr;
-        grid-template-rows: 0.95fr 1.05fr;
+        grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); /* key: no overlap */
       }
       .panel{padding:10px}
+
+      /* make chips not squeeze */
+      .topBtns{flex-direction:column; align-items:flex-end}
+
+      /* buttons become 2 per row (prevents overflow / overlap) */
+      .btnRow button{
+        flex: 1 1 calc(50% - 8px);
+      }
+
       button{padding:10px 11px}
       .chip{font-size:11px; padding:7px 9px}
       .tag{font-size:11px; padding:7px 9px}
@@ -368,9 +420,9 @@
     @media (max-width: 430px){
       h1{font-size:16px}
       input,select{padding:9px 10px; font-size:13px}
-      .btnRow{gap:7px}
       button{font-size:12px}
-      .stats .tag b{font-weight:900}
+      .statsRow{gap:6px}
+      .tag{padding:7px 9px}
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -504,7 +556,7 @@
     spawnFloat();
     addEventListener("resize", ()=>spawnFloat(innerWidth<650?10:14));
 
-    // ===== MUSIC (AUTOPLAY RULES SAFE) =====
+    // ===== MUSIC (AUTOPLAY SAFE) =====
     const bgMusic = document.getElementById("bgMusic");
     const soundGate = document.getElementById("soundGate");
     const soundChip = document.getElementById("soundChip");
@@ -525,6 +577,7 @@
         await bgMusic.play();
         hideGate();
       }catch(e){
+        // fallback: muted autoplay
         bgMusic.muted = true;
         bgMusic.play().catch(()=>{});
         showGate();
@@ -585,8 +638,8 @@
     let timer = 0, timerId = null, moveId = null;
     let tries = 0, career = 0;
 
-    const GAME_SECONDS = 20;          // gameplay 20s
-    const RESULT_MS = 15000;          // result visible 15s minimum
+    const GAME_SECONDS = 20;
+    const RESULT_MS = 15000;
 
     const careerWins = [
       "Promotion buff +10 🏆",
@@ -796,7 +849,6 @@
       speedUpNearPoint(e.clientX - a.left, e.clientY - a.top);
     }, { passive:true });
 
-    // one event type for mobile+desktop (no double fire)
     startBtn.addEventListener("pointerup", (e)=>{ e.preventDefault(); startGame(); });
     resetBtn.addEventListener("pointerup", (e)=>{ e.preventDefault(); resetGame(); });
 
