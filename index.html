@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Career First Valentine 😄💼💘</title>
+
+  <style>
+    :root{
+      --glass: rgba(255,255,255,.88);
+      --shadow: 0 18px 48px rgba(0,0,0,.18);
+      --r: 22px;
+
+      --ink:#121218;
+      --muted:#5b5b66;
+
+      --g1:#ff3d7f;
+      --g2:#ffcc00;
+      --g3:#4f7cff;
+      --g4:#00d084;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      color:var(--ink);
+      background: linear-gradient(120deg,var(--g1),var(--g2),var(--g3),var(--g4));
+      background-size: 260% 260%;
+      animation: bg 12s ease infinite;
+
+      display:grid;
+      place-items:center;
+
+      overflow:hidden; /* no scroll */
+      padding:
+        calc(12px + env(safe-area-inset-top))
+        calc(12px + env(safe-area-inset-right))
+        calc(12px + env(safe-area-inset-bottom))
+        calc(12px + env(safe-area-inset-left));
+
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      touch-action: manipulation;
+    }
+
+    @keyframes bg{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+
+    /* floating emojis */
+    .float{position:fixed; inset:0; pointer-events:none; z-index:-1; overflow:hidden}
+    .e{
+      position:absolute;
+      border-radius:999px;
+      background: rgba(255,255,255,.30);
+      border:1px solid rgba(255,255,255,.18);
+      display:grid;place-items:center;
+      filter: drop-shadow(0 10px 16px rgba(0,0,0,.10));
+      animation: rise linear infinite;
+      user-select:none;
+    }
+    @keyframes rise{
+      from{transform:translateY(112svh) rotate(0deg)}
+      to{transform:translateY(-22svh) rotate(180deg)}
+    }
+
+    .app{
+      width:min(1040px, 100%);
+      height: min(700px, 96dvh);
+      height: min(700px, 96svh);
+
+      border-radius: var(--r);
+      background: var(--glass);
+      border:1px solid rgba(255,255,255,.55);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      overflow:hidden;
+      position:relative;
+      display:grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    header{
+      padding: 12px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+      background: linear-gradient(135deg, rgba(255,255,255,.82), rgba(255,255,255,.48));
+    }
+
+    .brand{display:flex; align-items:center; gap:10px; min-width:0}
+    .logo{
+      width:44px;height:44px;border-radius:16px;
+      display:grid;place-items:center;
+      background: linear-gradient(135deg, rgba(255,255,255,.95), rgba(255,255,255,.35));
+      box-shadow: 0 12px 28px rgba(0,0,0,.14);
+      position:relative; overflow:hidden;
+      user-select:none;
+      flex:0 0 auto;
+    }
+    .logo::after{
+      content:"";
+      position:absolute; inset:-60%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.75), transparent);
+      transform: rotate(20deg);
+      animation: shine 2.6s linear infinite;
+    }
+    @keyframes shine{
+      0%{transform:translateX(-60%) rotate(20deg)}
+      100%{transform:translateX(60%) rotate(20deg)}
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(16px, 2.2vw, 22px);
+      line-height:1.1;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .sub{
+      margin:2px 0 0;
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .topBtns{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
+    .chip{
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12px;
+      background: rgba(255,255,255,.62);
+      border:1px solid rgba(0,0,0,.10);
+      display:inline-flex; gap:8px; align-items:center;
+      user-select:none;
+    }
+
+    .content{
+      display:grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap:12px;
+      padding: 12px;
+      min-height:0;
+    }
+
+    .panel{
+      border-radius: 18px;
+      border:1px solid rgba(0,0,0,.09);
+      background: rgba(255,255,255,.66);
+      padding: 12px;
+      min-height:0;
+      overflow:hidden;
+    }
+
+    .form{
+      display:grid;
+      gap:10px;
+      height:100%;
+      grid-template-rows: auto auto auto auto auto 1fr;
+      min-height:0;
+    }
+
+    label{font-size:12px;color:var(--muted)}
+    input,select{
+      width:100%;
+      padding:10px 10px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.95);
+      outline:none;
+      font-size:14px;
+    }
+    input:focus,select:focus{
+      border-color: rgba(79,124,255,.65);
+      box-shadow: 0 0 0 4px rgba(79,124,255,.14);
+    }
+
+    .btnRow{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+    button{
+      border:none;
+      cursor:pointer;
+      border-radius:14px;
+      padding:10px 12px;
+      font-weight:900;
+      font-size:13px;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      transition: transform .08s ease, box-shadow .2s ease, opacity .2s ease;
+      user-select:none;
+      white-space:nowrap;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    button:active{transform:scale(.98)}
+    .main{
+      background: linear-gradient(135deg,#121218,#4b4b55);
+      color:#fff;
+      box-shadow: 0 14px 26px rgba(0,0,0,.20);
+    }
+    .ghost{
+      background: rgba(255,255,255,.58);
+      border:1px solid rgba(0,0,0,.10);
+      color:#121218;
+    }
+
+    .stats{
+      border-radius: 18px;
+      border:1px solid rgba(0,0,0,.09);
+      background: rgba(255,255,255,.70);
+      padding: 10px;
+    }
+    .statsRow{
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .tag{
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12px;
+      background: rgba(255,255,255,.62);
+      border:1px solid rgba(0,0,0,.10);
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      user-select:none;
+    }
+
+    .arenaWrap{
+      height:100%;
+      display:grid;
+      grid-template-rows: auto 1fr;
+      gap:10px;
+      min-height:0;
+    }
+    .hud{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .arena{
+      border-radius: 18px;
+      border:1px solid rgba(0,0,0,.10);
+      background: linear-gradient(135deg, rgba(255,255,255,.82), rgba(255,255,255,.36));
+      box-shadow: 0 12px 26px rgba(0,0,0,.08) inset;
+      position:relative;
+      overflow:hidden;
+      min-height:0;
+    }
+
+    #loveRun{
+      position:absolute;
+      left:20px; top:20px;
+      padding:10px 12px;
+      border-radius: 16px;
+      background: linear-gradient(135deg,#ff3d7f,#ffcc00);
+      border:1px solid rgba(0,0,0,.10);
+      font-weight:1000;
+      box-shadow: 0 14px 26px rgba(0,0,0,.18);
+      display:none;
+      touch-action: manipulation;
+    }
+    #loveRun span{filter: drop-shadow(0 6px 10px rgba(0,0,0,.12))}
+    #loveRun:active{transform:scale(.98)}
+
+    .toast{
+      position:absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      background: rgba(255,255,255,.94);
+      border: 1px dashed rgba(0,0,0,.18);
+      border-radius: 18px;
+      padding: 12px;
+      display:none;
+      box-shadow: 0 18px 38px rgba(0,0,0,.16);
+      transform: translateY(14px);
+      opacity:0;
+      transition: .28s ease;
+    }
+    .toast.show{display:block; opacity:1; transform: translateY(0)}
+    .toast h3{margin:0 0 4px; font-size:14px}
+    .toast p{margin:0; color:var(--muted); font-size:13px; line-height:1.25}
+
+    .shake{animation: shake .35s ease 2}
+    @keyframes shake{
+      0%{transform:translateX(0)}
+      25%{transform:translateX(-6px)}
+      50%{transform:translateX(6px)}
+      75%{transform:translateX(-4px)}
+      100%{transform:translateX(0)}
+    }
+
+    /* Sound gate */
+    .soundGate{
+      position: fixed;
+      left: calc(12px + env(safe-area-inset-left));
+      right: calc(12px + env(safe-area-inset-right));
+      bottom: calc(12px + env(safe-area-inset-bottom));
+      max-width: 1040px;
+      margin: 0 auto;
+      border-radius: 18px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(0,0,0,.12);
+      box-shadow: 0 16px 34px rgba(0,0,0,.18);
+      padding: 10px 12px;
+      display:none;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 50;
+    }
+    .soundGate b{font-weight:1000}
+    .soundGate .mini{font-size:12px;color:var(--muted);line-height:1.2}
+    .pulse{
+      display:inline-grid; place-items:center;
+      width:30px;height:30px;border-radius:999px;
+      background: rgba(255,61,127,.16);
+      border:1px solid rgba(255,61,127,.30);
+      animation:pulse 1.2s ease-in-out infinite;
+      flex:0 0 auto;
+    }
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+
+    audio{display:none}
+
+    /* Tablet / phone: keep everything visible (no scroll) */
+    @media (max-width: 900px){
+      .app{
+        height: 97dvh;
+        height: 97svh;
+        border-radius: 18px;
+      }
+      header{padding:10px 12px}
+      .sub{display:none}
+      .logo{width:42px;height:42px}
+      .content{
+        padding: 10px;
+        gap: 10px;
+        grid-template-columns: 1fr;
+        grid-template-rows: 0.95fr 1.05fr;
+      }
+      .panel{padding:10px}
+      button{padding:10px 11px}
+      .chip{font-size:11px; padding:7px 9px}
+      .tag{font-size:11px; padding:7px 9px}
+    }
+
+    /* iPhone X / Poco M3 small width tuning */
+    @media (max-width: 430px){
+      h1{font-size:16px}
+      input,select{padding:9px 10px; font-size:13px}
+      .btnRow{gap:7px}
+      button{font-size:12px}
+      .stats .tag b{font-weight:900}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      body{animation:none}
+      .e{animation:none}
+      .logo::after{animation:none}
+      .shake{animation:none}
+      .pulse{animation:none}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="float" id="float"></div>
+
+  <div class="app" id="app">
+    <header>
+      <div class="brand">
+        <div class="logo">💼</div>
+        <div style="min-width:0">
+          <h1>Career First Valentine</h1>
+          <div class="sub">Love is optional. Career is mandatory 😬💘📈</div>
+        </div>
+      </div>
+      <div class="topBtns">
+        <div class="chip" id="modeChip">Mode: 🕒 Idle</div>
+        <div class="chip" id="soundChip">🔊 Sound: ON</div>
+      </div>
+    </header>
+
+    <div class="content">
+      <section class="panel">
+        <div class="form">
+          <div>
+            <label for="name">Name (optional)</label>
+            <input id="name" type="text" placeholder="e.g. Rumman 😄" />
+          </div>
+
+          <div>
+            <label for="age">Age</label>
+            <input id="age" type="number" min="1" max="120" placeholder="18" inputmode="numeric" />
+          </div>
+
+          <div>
+            <label for="status">Status</label>
+            <select id="status">
+              <option value="single">Single 😎</option>
+              <option value="couple">Couple 👫</option>
+            </select>
+          </div>
+
+          <div class="btnRow">
+            <button class="main" id="startBtn" type="button">Start Game 🎮</button>
+            <button class="ghost" id="pauseBtn" type="button" disabled>Pause ⏸️</button>
+            <button class="ghost" id="resetBtn" type="button">Reset 🔄</button>
+            <button class="ghost" id="muteBtn" type="button">Mute 🔇</button>
+          </div>
+
+          <div class="stats">
+            <div class="statsRow">
+              <div class="tag">⏱️ Time: <b id="timeLeft">0</b>s</div>
+              <div class="tag">🎯 Attempts: <b id="tries">0</b></div>
+              <div class="tag">📈 Career Points: <b id="career">0</b></div>
+            </div>
+            <div style="margin-top:8px;color:var(--muted);font-size:12px;">
+              Rule: Catch 💘 → “career distracted” 😬. Fail → grind buff 📚💼
+            </div>
+          </div>
+
+          <div style="color:var(--muted);font-size:12px;">
+            Tip: Pause freezes the button 😈
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="arenaWrap">
+          <div class="hud">
+            <div class="tag" id="statusTag">🕒 Waiting…</div>
+            <div class="tag" id="moodTag">Mood: 😐</div>
+          </div>
+
+          <div class="arena" id="arena">
+            <button id="loveRun" type="button"><span>FALL IN LOVE 💘</span></button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="toast" id="toast">
+      <h3 id="tTitle"></h3>
+      <p id="tText"></p>
+    </div>
+  </div>
+
+  <!-- Put rumman.mp3 in the same folder as this HTML -->
+  <audio id="bgMusic" autoplay loop preload="auto" playsinline>
+    <source src="./rumman.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="soundGate" id="soundGate" aria-live="polite">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="pulse">🔊</div>
+      <div class="mini">
+        <b>Sound blocked.</b><br>
+        Tap anywhere once to enable music 🎵
+      </div>
+    </div>
+    <div class="mini">No button ✅</div>
+  </div>
+
+  <script>
+    // ===== FLOATING EMOJIS =====
+    const floatWrap = document.getElementById('float');
+    const emojis = ["💼","📈","💘","🎯","🧠","🤑","💸","📚","🧾","🚀","😬","🫠","🏆","🧋"];
+    function spawnFloat(n=14){
+      floatWrap.innerHTML="";
+      for(let i=0;i<n;i++){
+        const d=document.createElement("div");
+        d.className="e";
+        d.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        d.style.left=(Math.random()*100)+"vw";
+        d.style.animationDuration=(7+Math.random()*9)+"s";
+        d.style.animationDelay=(-Math.random()*10)+"s";
+        d.style.opacity=(0.16+Math.random()*0.55).toFixed(2);
+        const s=34+Math.random()*20;
+        d.style.width=d.style.height=s+"px";
+        floatWrap.appendChild(d);
+      }
+    }
+    spawnFloat();
+    addEventListener("resize", ()=>spawnFloat(innerWidth<650?10:14));
+
+    // ===== MUSIC (AUTOPLAY RULES SAFE) =====
+    const bgMusic = document.getElementById("bgMusic");
+    const soundGate = document.getElementById("soundGate");
+    const soundChip = document.getElementById("soundChip");
+    const muteBtn = document.getElementById("muteBtn");
+    let muted = false;
+
+    function uiSound(){
+      soundChip.textContent = muted ? "🔇 Sound: OFF" : "🔊 Sound: ON";
+      muteBtn.textContent = muted ? "Unmute 🔊" : "Mute 🔇";
+    }
+    function showGate(){ soundGate.style.display = "flex"; }
+    function hideGate(){ soundGate.style.display = "none"; }
+
+    async function tryPlayWithSound(){
+      bgMusic.volume = 0.85;
+      bgMusic.muted = false;
+      try{
+        await bgMusic.play();
+        hideGate();
+      }catch(e){
+        bgMusic.muted = true;
+        bgMusic.play().catch(()=>{});
+        showGate();
+      }
+    }
+
+    function enableSoundOnFirstTap(){
+      if (muted) return;
+      bgMusic.muted = false;
+      bgMusic.volume = 0.85;
+      bgMusic.play().catch(()=>{});
+      hideGate();
+    }
+
+    window.addEventListener("load", tryPlayWithSound, { once:true });
+    document.addEventListener("pointerdown", enableSoundOnFirstTap, { passive:true });
+
+    muteBtn.addEventListener("click", ()=>{
+      muted = !muted;
+      bgMusic.muted = muted;
+      if(!muted){
+        bgMusic.volume = 0.85;
+        bgMusic.play().catch(()=>{ showGate(); });
+      }
+      uiSound();
+    });
+    uiSound();
+
+    // ===== GAME =====
+    const app = document.getElementById("app");
+    const arena = document.getElementById("arena");
+    const loveRun = document.getElementById("loveRun");
+
+    const nameEl = document.getElementById("name");
+    const ageEl = document.getElementById("age");
+    const statusEl = document.getElementById("status");
+
+    const startBtn = document.getElementById("startBtn");
+    const pauseBtn = document.getElementById("pauseBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    const modeChip = document.getElementById("modeChip");
+    const statusTag = document.getElementById("statusTag");
+    const moodTag = document.getElementById("moodTag");
+
+    const timeLeftEl = document.getElementById("timeLeft");
+    const triesEl = document.getElementById("tries");
+    const careerEl = document.getElementById("career");
+
+    const toast = document.getElementById("toast");
+    const tTitle = document.getElementById("tTitle");
+    const tText = document.getElementById("tText");
+
+    let running = false;
+    let paused = false;
+
+    let x=20, y=20, vx=3.1, vy=2.6;
+    let timer = 0, timerId = null, moveId = null;
+    let tries = 0, career = 0;
+
+    const GAME_SECONDS = 20;          // gameplay 20s
+    const RESULT_MS = 15000;          // result visible 15s minimum
+
+    const careerWins = [
+      "Promotion buff +10 🏆",
+      "Skill unlocked: 'Ignore Cupid' 🧠",
+      "Wallet smiled (rare event) 🤑",
+      "Deadline defeated 🎯",
+      "LinkedIn aura increased 📈"
+    ];
+
+    function showToast(title, text, ms=3200){
+      tTitle.textContent = title;
+      tText.textContent = text;
+
+      toast.classList.add("show");
+      toast.style.display = "block";
+
+      clearTimeout(showToast._t1);
+      clearTimeout(showToast._t2);
+
+      showToast._t1 = setTimeout(()=> {
+        toast.classList.remove("show");
+        showToast._t2 = setTimeout(()=> toast.style.display="none", 260);
+      }, Math.max(1000, ms));
+    }
+
+    function setMode(text){ modeChip.textContent = text; }
+    function clamp(n,min,max){ return Math.max(min, Math.min(max, n)); }
+
+    function resetGame(){
+      running = false;
+      paused = false;
+      clearInterval(timerId);
+      cancelAnimationFrame(moveId);
+      timerId = null;
+      moveId = null;
+
+      loveRun.style.display = "none";
+      pauseBtn.disabled = true;
+      pauseBtn.textContent = "Pause ⏸️";
+
+      statusTag.textContent = "🕒 Waiting…";
+      moodTag.textContent = "Mood: 😐";
+      setMode("Mode: 🕒 Idle");
+
+      timeLeftEl.textContent = "0";
+      triesEl.textContent = String(tries);
+      careerEl.textContent = String(career);
+
+      app.classList.remove("shake");
+    }
+
+    function bounds(){
+      const a = arena.getBoundingClientRect();
+      const b = loveRun.getBoundingClientRect();
+      return { w: a.width, h: a.height, bw: b.width, bh: b.height };
+    }
+
+    function placeRandom(){
+      const {w,h,bw,bh} = bounds();
+      x = Math.random() * Math.max(1, (w - bw));
+      y = Math.random() * Math.max(1, (h - bh));
+      vx = (Math.random()<0.5?-1:1) * (2.8 + Math.random()*2.0);
+      vy = (Math.random()<0.5?-1:1) * (2.4 + Math.random()*2.0);
+      loveRun.style.left = x + "px";
+      loveRun.style.top  = y + "px";
+    }
+
+    function move(){
+      if(!running) return;
+      if(!paused){
+        const {w,h,bw,bh} = bounds();
+        x += vx; y += vy;
+
+        if(x <= 0){ x=0; vx=Math.abs(vx); }
+        if(y <= 0){ y=0; vy=Math.abs(vy); }
+        if(x >= w - bw){ x = w - bw; vx = -Math.abs(vx); }
+        if(y >= h - bh){ y = h - bh; vy = -Math.abs(vy); }
+
+        loveRun.style.left = x + "px";
+        loveRun.style.top  = y + "px";
+      }
+      moveId = requestAnimationFrame(move);
+    }
+
+    function startTimer(seconds){
+      timer = seconds;
+      timeLeftEl.textContent = String(timer);
+
+      clearInterval(timerId);
+      timerId = setInterval(()=>{
+        if(!running) return;
+        if(!paused){
+          timer--;
+          timeLeftEl.textContent = String(Math.max(0, timer));
+          if(timer <= 0){
+            clearInterval(timerId);
+            failOutcome();
+          }
+        }
+      }, 1000);
+    }
+
+    function failOutcome(){
+      running = false;
+      loveRun.style.display = "none";
+      pauseBtn.disabled = true;
+
+      setMode("Mode: 📚 Grind");
+      statusTag.textContent = "📚 Study / Grind";
+      moodTag.textContent = "Mood: 😌";
+
+      const name = (nameEl.value||"").trim();
+      const who = name ? `, ${name}` : "";
+      const status = statusEl.value;
+
+      career += 8;
+      careerEl.textContent = String(career);
+
+      const win = careerWins[Math.floor(Math.random()*careerWins.length)];
+      showToast("You missed love 😭", `Hey${who}! Back to ${status==="single"?"solo grind":"power-couple grind"} 💼. ${win}`, RESULT_MS);
+    }
+
+    function winOutcome(){
+      running = false;
+      loveRun.style.display = "none";
+      pauseBtn.disabled = true;
+
+      setMode("Mode: 💘 Date");
+      statusTag.textContent = "💘 Love caught";
+      moodTag.textContent = "Mood: 😬";
+
+      const name = (nameEl.value||"").trim();
+      const who = name ? `, ${name}` : "";
+      const status = statusEl.value;
+
+      career = Math.max(0, career - 4);
+      careerEl.textContent = String(career);
+
+      showToast("You caught love 💘", `Hey${who}! Career got distracted 😬… date mode ON 🥂✨ (${status})`, RESULT_MS);
+
+      app.classList.remove("shake");
+      void app.offsetWidth;
+      app.classList.add("shake");
+    }
+
+    function startGame(){
+      enableSoundOnFirstTap();
+
+      const age = Number(ageEl.value);
+      tries++;
+      triesEl.textContent = String(tries);
+
+      if(!age || age<1 || age>120){
+        showToast("System error 🧾", "Enter a real age 😄", 4000);
+        statusTag.textContent = "⚠️ Invalid age";
+        moodTag.textContent = "Mood: 🤔";
+        return;
+      }
+
+      const name = (nameEl.value||"").trim();
+      const who = name ? `, ${name}` : "";
+
+      if(age < 18){
+        setMode("Mode: 📚 Study");
+        statusTag.textContent = "📚 Go study";
+        moodTag.textContent = "Mood: 🧠";
+        career += 12;
+        careerEl.textContent = String(career);
+        showToast("Go for study 📚", `Hey${who}! Love can wait. Exams won’t. 😄`, RESULT_MS);
+        return;
+      }
+
+      running = true;
+      paused = false;
+      pauseBtn.disabled = false;
+      pauseBtn.textContent = "Pause ⏸️";
+
+      setMode("Mode: 🏃 Love Chase");
+      statusTag.textContent = "🏃 Catch the button!";
+      moodTag.textContent = "Mood: 😬";
+
+      loveRun.style.display = "block";
+      placeRandom();
+      startTimer(GAME_SECONDS);
+
+      cancelAnimationFrame(moveId);
+      moveId = requestAnimationFrame(move);
+    }
+
+    function speedUpNearPoint(px, py){
+      if(!running || paused) return;
+      const bx = x + loveRun.offsetWidth/2;
+      const by = y + loveRun.offsetHeight/2;
+      const dx = px - bx;
+      const dy = py - by;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < 140){
+        vx += (vx>0?0.25:-0.25);
+        vy += (vy>0?0.22:-0.22);
+        vx = clamp(vx, -7, 7);
+        vy = clamp(vy, -7, 7);
+      }
+    }
+
+    arena.addEventListener("pointermove", (e)=>{
+      const a = arena.getBoundingClientRect();
+      speedUpNearPoint(e.clientX - a.left, e.clientY - a.top);
+    }, { passive:true });
+
+    // one event type for mobile+desktop (no double fire)
+    startBtn.addEventListener("pointerup", (e)=>{ e.preventDefault(); startGame(); });
+    resetBtn.addEventListener("pointerup", (e)=>{ e.preventDefault(); resetGame(); });
+
+    pauseBtn.addEventListener("pointerup", (e)=>{
+      e.preventDefault();
+      if(!running) return;
+      paused = !paused;
+      pauseBtn.textContent = paused ? "Resume ▶️" : "Pause ⏸️";
+      statusTag.textContent = paused ? "⏸️ Frozen (tap it!)" : "🏃 Catch the button!";
+      moodTag.textContent = paused ? "Mood: 😈" : "Mood: 😬";
+    });
+
+    loveRun.addEventListener("pointerup", (e)=>{
+      e.preventDefault();
+      if(!running) return;
+      winOutcome();
+    });
+
+    resetGame();
+  </script>
+</body>
+</html>
